@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>显示网页时钟</title>
+</head>
+
+<body>
+    <script>
+        window.onload = function () {
+            document.getElementById("btn").onclick = function () {
+                v = window.setInterval("display()", 1000)
+            }
+            document.getElementById("btnstop").onclick = function () {
+                window.clearInterval(v)
+            }
+        }
+
+        function display() {
+            let nowtime = new Date();
+            document.getElementById("time").innerHTML = nowtime.toLocaleString()
+            document.getElementById("times").innerHTML = nowtime.getTime()
+        }
+    </script>
+    <input type="button" id="btn" value="显示网页时钟"><br>
+    <input type="button" id="btnstop" value="停止时间">
+    <div id="time"></div>
+    <div id="times"></div>
+</body>
+
+</html>

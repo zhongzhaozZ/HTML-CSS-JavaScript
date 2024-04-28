@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>表单验证</title>
+    <style>
+        input {
+            width: 200px;
+            height: 30px;
+        }
+
+        span {
+            font-size: 12px;
+            color: red;
+        }
+    </style>
+</head>
+
+<body>
+    <script>
+        /*
+            （1）用户名不能为空
+            （2）用户名必须在6-14位之间
+            （3）用户名只能有数字和字母组成，不能含有其它符号（正则表达式）
+            （4）密码和确认密码一致，邮箱地址合法。
+            （5）统一失去焦点验证
+            （6）错误提示信息统一在span标签中提示，并且要求字体12号，红色。
+            （7）文本框再次获得焦点后，清空错误提示信息，如果文本框中数据不合法要求清空文本框的value
+            （8）最终表单中所有项均合法方可提交
+        */
+        window.onload = function () {
+            const errornamespan = document.getElementById("errorname")
+            const errorpasswordspan = document.getElementById("errorpassword")
+            const errorconfirmspan = document.getElementById("errorconfirm")
+            const erroremailspan = document.getElementById("erroremail")
+            const usernameElm = document.getElementById("username")
+            const passwordElm = document.getElementById("password")
+            const confirmElm = document.getElementById("confirm")
+            const emailElm = document.getElementById("email")
+            usernameElm.onfocus = function () {
+                if (errornamespan.innerHTML != "") {
+                    usernameElm.value = ""
+                }
+                errornamespan.innerHTML = ""
+            }
+            usernameElm.onblur = function () {
+                let username = usernameElm.value.trim()
+                if (username === "") {
+                    errornamespan.innerHTML = "用户名不能为空"
+                } else {
+                    let regExp = /^[A-Za-z0-9]{6,14}$/
+                    if (regExp.test(username)) {
+                        errornamespan.innerHTML = ""
+                    } else {
+                        errornamespan.innerHTML = "用户名不合法"
+                    }
+                }
+            }
+            passwordElm.onfocus = function () {
+                if (errorpasswordspan.innerHTML != "") {
+                    passwordElm.value = ""
+                }
+                errorpasswordspan.innerHTML = ""
+            }
+            passwordElm.onblur = function () {
+                let password = passwordElm.value.trim()
+                if (password === "") {
+                    errorpasswordspan.innerHTML = "密码不能为空"
+                } else {
+                    let regExp = /^[a-zA-Z]\w{5,17}$/
+                    if (regExp.test(password)) {
+                        errorpasswordspan.innerHTML = ""
+                    } else {
+                        errorpasswordspan.innerHTML = "密码不合法"
+                    }
+                }
+            }
+            confirmElm.onfocus = function () {
+                if (errorconfirmspan.innerHTML != "") {
+                    confirmElm.value = ""
+                }
+                errorconfirmspan.innerHTML = ""
+            }
+            confirmElm.onblur = function () {
+                if (confirmElm.value != passwordElm.value) {
+                    errorconfirmspan.innerHTML = "密码不一致"
+                }
+            }
+            emailElm.onfocus = function () {
+                if (erroremailspan.innerHTML != "") {
+                    emailElm.value = ""
+                }
+                erroremailspan.innerHTML = ""
+            }
+            emailElm.onblur = function () {
+                let email = emailElm.value.trim()
+                if (email === "") {
+                    erroremailspan.innerHTML = "邮箱不能为空"
+                } else {
+                    let regExp = /^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/
+                    if (regExp.test(email)) {
+                        erroremailspan.innerHTML = ""
+                    } else {
+                        erroremailspan.innerHTML = "邮箱不合法"
+                    }
+                }
+            }
+            /*
+            // 给提交按钮绑定鼠标单击事件
+               var submitBtnElt = document.getElementById("submitBtn");
+               submitBtn.onclick = function(){
+                   // 触发username的blur userpwd2的blur email的blur
+                   // 不需要人工操作,使用纯JS代码触发事件.
+                   usernameElt.focus();
+                   usernameElt.blur();
+                   
+                   userpwd2Elt.focus();
+                   userpwd2Elt.blur();
+                   
+                   emailElt.focus();
+                   emailElt.blur();
+                   
+                   // 当所有表单项都是合法的时候,提交表单
+                   if(usernameErrorSpan.innerText == "" && pwdErrorSpan.innerText == "" && emailSpan.innerText == ""){
+                       // 获取表单对象
+                       var userFormElt = document.getElementById("userForm");
+                       // 可以在这里设置action,也可以不在这里.
+                       userFormElt.action = "http://localhost:8080/jd/save";
+                       // 提交表单
+                       userFormElt.submit();
+                   }
+               }
+            */
+            document.getElementById("submitbtn").onclick = function () {
+                usernameElm.focus()
+                usernameElm.blur()
+
+                passwordElm.focus()
+                passwordElm.blur()
+
+                emailElm.focus()
+                emailElm.blur()
+
+                if (errornamespan.innerHTML === "" && errorpasswordspan.innerHTML === "" && erroremailspan.innerHTML === "") {
+                    const userformElm = document.getElementById("userform")
+                    userformElm.action = "http://localhost:8080/jd/save"
+                    userformElm.submit()
+                }
+            }
+        }
+    </script>
+    <!-- 属性值最好不要使用submit/reset这些关键字，否则会产生冲突 -->
+    <form id="userform" method="get">
+        用户名<input type="text" name="username" id="username"><span id="errorname"></span><br>
+        密码<input type="password" name="password" id="password"><span id="errorpassword"></span><br>
+        确认密码<input type="password" id="confirm"><span id="errorconfirm"></span><br>
+        邮箱<input type="text" name="email" id="email"><span id="erroremail"></span><br>
+        <input type="button" id="submitbtn" value="注册">
+        <input type="reset">
+    </form>
+</body>
+
+</html>

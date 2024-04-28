@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>完整表单</title>
+</head>
+
+<body>
+    <form action="#">
+        <label for="username">用户名</label>
+        <input id="username" type="text" name="username">
+        <br>
+        <label for="password">密码</label>
+        <input id="password" type="password" name="password">
+        <br>
+        性别：男<input type="radio" name="sex" value="1" checked>
+        女<input type="radio" name="sex" value="0">
+        <br>
+        爱好：唱歌<input type="checkbox" name="hobby" value="sing">
+        跳舞<input type="checkbox" name="hobby" value="dance">
+        rap <input type="checkbox" name="hobby" value="rap" checked>
+        打篮球<input type="checkbox" name="hobby" value="basketball">
+        <br>
+        学历<select name="degree">
+            <option value="bk">本科</option>
+            <option value="zk">专科</option>
+            <option value="gz">高中</option>
+            <option value="ss">硕士</option>
+        </select>
+        <br>
+        <label for="profile">个人简介</label>
+        <textarea id="profile" name="profile" cols="30" rows="10"></textarea>
+        <br>
+        请上传身份材料<input type="file" name="fiel">
+        <br>
+        <input type="checkbox" name="xieyi" value="1">阅读并同意协议
+        <br>
+        <input type="submit">
+        <input type="reset">
+    </form>
+</body>
+
+</html>
